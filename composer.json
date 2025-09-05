@@ -1,0 +1,16 @@
+{
+    "name": "user2/admin",
+    "description": "api peliculas",
+    "autoload": {
+        "psr-4": {
+            "User2\\Admin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "franco"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
