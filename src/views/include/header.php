@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,36 +14,49 @@
   <style>
     html, body {
       height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
+
     body {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
     }
+
+    /* Wrapper principal */
     .wrapper {
-      flex: 1; /* ocupa todo el espacio entre header y footer */
+      flex: 1;
       display: flex;
+      overflow: hidden;
     }
+
     /* Sidebar */
     .sidebar {
-      min-height: 100%;
+      position: sticky;
+      top: 0;
+      height: 100vh;
       background: #fff;
       border-right: 1px solid #ddd;
       padding: 1rem;
+      overflow-y: auto;
     }
+
     .sidebar .nav-link {
       color: #333;
       border-radius: 8px;
       margin-bottom: .3rem;
     }
+
     .sidebar .nav-link.active {
       background: #3b82f6;
       color: #fff;
     }
+
     .sidebar .nav-link:hover {
       background: #e6f0ff;
     }
+
     .section-title {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -54,6 +65,7 @@
       margin-bottom: .5rem;
       color: #6c757d;
     }
+
     /* Topbar */
     .topbar {
       background: #fff;
@@ -62,92 +74,116 @@
       position: sticky;
       top: 0;
       z-index: 1030;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
     .topbar .form-control {
       border-radius: 12px;
     }
+
     .profile-img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
+
     .username {
       font-weight: 600;
       margin-bottom: -4px;
     }
+
     .user-role {
       font-size: 0.8rem;
       color: #6c757d;
     }
+
+    /* Contenido principal */
+    main {
+      flex: 1;
+      overflow-y: auto;
+    
+    }
   </style>
+
+  <script>
+    const base_url = "<?php echo BASE_URL; ?>";
+  </script>
 </head>
 <body>
+
   <div class="wrapper container-fluid">
-    <div class="row flex-grow-1">
+    <div class="row flex-nowrap">
+
       <!-- Sidebar -->
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
         <div class="logo d-flex align-items-center mb-3">
-           <i class="bi bi-yin-yang fs-4 text-primary"></i>
-            <span class="fw-bold">  YIN YANG</span>
+          <i class="bi bi-yin-yang fs-4 text-primary"></i>
+          <span class="fw-bold ms-2">YIN YANG</span>
         </div>
+
         <div class="section-title">Inicio</div>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#"><i class="bi bi-grid me-2"></i> Dashboard</a>
+            <a class="nav-link" href="#"><i class="bi bi-grid me-2"></i> Dashboard</a>
           </li>
-          
         </ul>
 
         <div class="section-title">Menus</div>
         <ul class="nav flex-column">
           <li><a class="nav-link" href="<?php echo BASE_URL;?>peliculas"><i class="bi bi-film me-2"></i> Peliculas</a></li>
           <li><a class="nav-link" href="<?php echo BASE_URL;?>generos"><i class="bi bi-card-list me-2"></i> Generos</a></li>
-          <!--<li><a class="nav-link" href="#"><i class="bi bi-people me-2"></i> Users</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-tools me-2"></i> Utilities</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-lock-fill me-2"></i> Admin</a></li>-->
         </ul>
 
         <div class="section-title">Cerrar Sesión</div>
-        <div class="d-flex  mt-3">
-  <form action="src/controller/logout.php" method="POST">
-    <button type="submit" class="btn btn-danger w-100">
-      <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
-    </button>
-  </form>
+        <div class="mt-3">
+  <button type="button" onclick="cerrar_sesion();" class="btn btn-danger w-100">
+    <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+  </button>
 </div>
 
       </nav>
 
       <!-- Main content -->
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-column">
+
         <!-- Topbar -->
-        <div class="d-flex justify-content-between align-items-center topbar">
-          <!-- Hamburguesa + Logo + Buscar -->
+        <div class="topbar">
           <div class="d-flex align-items-center gap-3">
+            <!-- Botón hamburguesa para móviles -->
             <button class="btn btn-outline-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
               <i class="bi bi-list fs-4"></i>
             </button>
             <i class="bi bi-diagram-2 fs-4 text-primary"></i>
-            <span class="fw-bold">Sistema de peliculas</span>
+            <span class="fw-bold">Sistema de Películas</span>
           </div>
-          
-          <!-- Acciones -->
+
           <div class="d-flex align-items-center gap-3">
-          
             <img src="https://flagcdn.com/w40/pe.png" class="rounded-circle" width="30" height="30" alt="Bandera">
-           
 
-<div class="d-flex align-items-center gap-2">
-  <img src="https://i.pravatar.cc/40?img=12" alt="User" class="profile-img">
-  <div class="d-none d-sm-block">
-    <div class="username"><?= htmlspecialchars($_SESSION['sesion_ventas_usuario'] ?? 'Usuario') ?></div>
-    <div class="user-role"><?= htmlspecialchars($_SESSION['sesion_ventas_rol'] ?? 'rol') ?></div>
-  </div>
-</div>
+            <?php
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $nombre = $_SESSION['sesion_ventas_usuario'] ?? 'Nombre';
+            $apellido = $_SESSION['sesion_ventas_apellido'] ?? 'Apellido';
+            $rol = $_SESSION['sesion_ventas_rol'] ?? 'Invitado';
+            $nombreCompleto = $nombre . ' ' . $apellido;
+            ?>
 
+            <div class="d-flex align-items-center gap-2">
+              <img src="https://i.pravatar.cc/40?img=12" alt="User" class="profile-img">
+              <div class="d-none d-sm-block">
+                <div class="username"><?= htmlspecialchars($nombreCompleto) ?></div>
+                <div class="user-role"><?= htmlspecialchars($rol) ?></div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Contenido principal -->
         <div class="content flex-grow-1 py-4">
+          
+        
