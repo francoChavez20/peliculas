@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -86,10 +88,10 @@
       <!-- Sidebar -->
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
         <div class="logo d-flex align-items-center mb-3">
-           <i class="bi bi-diagram-2 fs-4 text-primary"></i>
-            <span class="fw-bold">Esperanza UI</span>
+           <i class="bi bi-yin-yang fs-4 text-primary"></i>
+            <span class="fw-bold">  YIN YANG</span>
         </div>
-        <div class="section-title">Home</div>
+        <div class="section-title">Inicio</div>
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active" href="#"><i class="bi bi-grid me-2"></i> Dashboard</a>
@@ -97,24 +99,24 @@
           
         </ul>
 
-        <div class="section-title">Pages</div>
+        <div class="section-title">Menus</div>
         <ul class="nav flex-column">
-          <li><a class="nav-link" href="#"><i class="bi bi-collection me-2"></i> Special Pages</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-shield-lock me-2"></i> Authentication</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-people me-2"></i> Users</a></li>
+          <li><a class="nav-link" href="<?php echo BASE_URL;?>peliculas"><i class="bi bi-film me-2"></i> Peliculas</a></li>
+          <li><a class="nav-link" href="<?php echo BASE_URL;?>generos"><i class="bi bi-card-list me-2"></i> Generos</a></li>
+          <!--<li><a class="nav-link" href="#"><i class="bi bi-people me-2"></i> Users</a></li>
           <li><a class="nav-link" href="#"><i class="bi bi-tools me-2"></i> Utilities</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-lock-fill me-2"></i> Admin</a></li>
+          <li><a class="nav-link" href="#"><i class="bi bi-lock-fill me-2"></i> Admin</a></li>-->
         </ul>
 
-        <div class="section-title">Elements</div>
-        <ul class="nav flex-column">
-          <li><a class="nav-link" href="#"><i class="bi bi-box-seam me-2"></i> Components</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-window-stack me-2"></i> Widget</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-geo-alt me-2"></i> Maps</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-ui-checks-grid me-2"></i> Form</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-table me-2"></i> Table</a></li>
-          <li><a class="nav-link" href="#"><i class="bi bi-star me-2"></i> Icons</a></li>
-        </ul>
+        <div class="section-title">Cerrar Sesión</div>
+        <div class="d-flex  mt-3">
+  <form action="src/controller/logout.php" method="POST">
+    <button type="submit" class="btn btn-danger w-100">
+      <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+    </button>
+  </form>
+</div>
+
       </nav>
 
       <!-- Main content -->
@@ -135,13 +137,15 @@
           
             <img src="https://flagcdn.com/w40/pe.png" class="rounded-circle" width="30" height="30" alt="Bandera">
            
-            <div class="d-flex align-items-center gap-2">
-              <img src="https://i.pravatar.cc/40?img=12" alt="User" class="profile-img">
-              <div class="d-none d-sm-block">
-                <div class="username">Franco Chavez</div>
-                <div class="user-role">Administrador</div>
-              </div>
-            </div>
+
+<div class="d-flex align-items-center gap-2">
+  <img src="https://i.pravatar.cc/40?img=12" alt="User" class="profile-img">
+  <div class="d-none d-sm-block">
+    <div class="username"><?= htmlspecialchars($_SESSION['sesion_ventas_usuario'] ?? 'Usuario') ?></div>
+    <div class="user-role"><?= htmlspecialchars($_SESSION['sesion_ventas_rol'] ?? 'rol') ?></div>
+  </div>
+</div>
+
           </div>
         </div>
 

@@ -19,6 +19,7 @@ if ($tipo=="iniciar_sesion") {
             session_start();
             $_SESSION['sesion_ventas_id'] = $arrPersona->id;
             $_SESSION['sesion_ventas_usuario'] = $arrPersona->nombre; // solo usuario
+              $_SESSION['sesion_ventas_rol'] = $arrPersona->rol;   
             $arrResponse = array('status'=>true, 'msg'=>'Ingresar al sistema');
         } else {
             $arrResponse = array('status'=>false, 'msg'=>'Error, contraseña incorrecta');
