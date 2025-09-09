@@ -60,7 +60,7 @@ async function registrar_pelicula() {
     datos.append('generos', JSON.stringify(generos));
 
     try {
-        let respuesta = await fetch(base_url + 'src/controller/Pelicula.php?tipo=registrar', {
+        let respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=registrar', {
             method: 'POST',
             body: datos
         });
@@ -78,3 +78,103 @@ async function registrar_pelicula() {
         console.log("Oops, ocurrió un error: " + e);
     }
 }
+
+
+// 2️⃣ Listar géneros
+async function listar_generos() {
+    try {
+        let res = await fetch(base_url + 'src/controller/genero.php?tipo=listar');
+        let json = await res.json();
+        let select = document.getElementById('generos');
+        select.innerHTML = "";
+        if (json.status) {
+            json.data.forEach(g => {
+                let option = document.createElement('option');
+                option.value = g.id;
+                option.text = g.nombre;
+                select.add(option);
+            });
+        }
+    } catch (e) {
+        console.log("Error al listar géneros: " + e);
+    }
+}
+
+/*// 3️⃣ Cargar película y marcar géneros
+async function cargarPelicula(id) {
+    try {
+        let res = await fetch(base_url + 'src/controller/pelicula.php?tipo=ver&id=' + id);
+        let json = await res.json();
+
+        if (json.status) {
+            let p = json.data;
+            document.getElementById('pelicula_id').value = p.id;
+            document.getElementById('titulo').value = p.titulo;
+            document.getElementById('descripcion').value = p.descripcion;
+            document.getElementById('anio_estreno').value = p.anio_estreno;
+            document.getElementById('duracion').value = p.duracion;
+            document.getElementById('idioma').value = p.idioma;
+            document.getElementById('calificacion').value = p.calificacion;
+
+            await listar_generos(); // cargar todos los géneros
+
+            // 4️⃣ Marcar géneros existentes
+            let select = document.getElementById('generos');
+            Array.from(select.options).forEach(opt => {
+                if (p.generos.includes(parseInt(opt.value))) {
+                    opt.selected = true;
+                }
+            });
+        } else {
+            swal("Error", "No se pudo cargar la película", "error");
+        }
+    } catch (e) {
+        console.log("Error al cargar la película: " + e);
+    }
+}
+
+// 5️⃣ Guardar cambios
+async function editar_pelicula() {
+    let frm = document.getElementById('frmEditarPelicula');
+    let generos = Array.from(document.getElementById('generos').selectedOptions)
+                        .map(o => o.value)
+                        .filter(v => v !== "");
+
+    if (generos.length === 0) {
+        alert("Debes seleccionar al menos un género");
+        return;
+    }
+
+    const datos = new FormData(frm);
+    datos.append('generos', JSON.stringify(generos));
+
+    try {
+        let res = await fetch(base_url + 'src/controller/pelicula.php?tipo=editar', {
+            method: 'POST',
+            body: datos
+        });
+        let json = await res.json();
+        if (json.status) {
+            swal("Actualizado", json.mensaje, "success");
+        } else {
+            swal("Error", json.mensaje, "error");
+        }
+    } catch (e) {
+        console.log("Error al editar: " + e);
+    }
+}
+
+function getIdFromPath() {
+    const path = window.location.pathname; // /peliculas/editar-pelicula/7
+    const parts = path.split('/');
+    return parts[parts.length - 1]; // devuelve 7
+}
+
+window.onload = async function() {
+    const peliculaId = getIdFromPath();
+    if (peliculaId) {
+        await cargarPelicula(peliculaId);
+    } else {
+        swal("Error", "No se especificó el ID de la película", "error");
+    }
+};*/

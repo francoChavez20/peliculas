@@ -22,9 +22,10 @@ if ($tipo == "listar") {
 
             // Botones de acción
             $opciones = '
-            <a href="' . BASE_URL . 'editar-pelicula/' . $id_pelicula . '" class="btn btn-warning">
-                <i class="fa fa-pencil"></i> Editar
-            </a>
+            <a href="' . BASE_URL . 'editar-pelicula.php?id=' . $id_pelicula . '" class="btn btn-warning">
+    <i class="fa fa-pencil"></i> Editar
+</a>
+
             <button onclick="eliminar_pelicula(' . $id_pelicula . ');" class="btn btn-danger">
                 <i class="fa fa-trash"></i> Eliminar
             </button>';
@@ -67,3 +68,40 @@ if ($tipo == "registrar" && $_POST) {
         echo json_encode(['status' => false, 'mensaje' => 'Error al registrar la película']);
     }
 }
+
+/*
+if ($tipo == "ver" && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $pelicula = $objPelicula->verPeliculas($id);
+    $generos = $objPelicula->verGeneros($id);
+    $pelicula->generos = $generos;
+    echo json_encode(['status'=>true,'data'=>$pelicula], JSON_UNESCAPED_UNICODE);
+}
+
+if ($tipo == "editar" && $_POST) {
+    $id = $_POST['pelicula_id'];
+    $titulo = $_POST['titulo'];
+    $descripcion = $_POST['descripcion'];
+    $anio = $_POST['anio_estreno'];
+    $duracion = $_POST['duracion'];
+    $idioma = $_POST['idioma'];
+    $calificacion = $_POST['calificacion'];
+    $generos = json_decode($_POST['generos'], true);
+
+    if(empty($id) || empty($titulo) || empty($descripcion) || empty($anio) || empty($duracion) || empty($idioma) || empty($calificacion) || empty($generos)) {
+        echo json_encode(['status'=>false,'mensaje'=>'Campos vacíos']); exit;
+    }
+
+    $res = $objPelicula->editarPelicula($id,$titulo,$descripcion,$anio,$duracion,$idioma,$calificacion);
+
+    if($res){
+        $objPelicula->eliminarGeneros($id);
+        foreach($generos as $gid){
+            if(!empty($gid)) $objPelicula->asignarGenero($id,$gid);
+        }
+        echo json_encode(['status'=>true,'mensaje'=>'Película actualizada correctamente']);
+    } else {
+        echo json_encode(['status'=>false,'mensaje'=>'Error al actualizar la película']);
+    }
+}*/
+

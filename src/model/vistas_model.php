@@ -5,7 +5,7 @@ class vistaModelo
     
     protected static function obtener_vista($vista)
     {
-        $palabras_permitidas = ['inicio','peliculas','generos','nueva-peli'];
+        $palabras_permitidas = ['inicio','peliculas','generos','nueva-peli','editar-pelicula'];
 
     if (!isset($_SESSION['sesion_ventas_id'])) {
         return "login";

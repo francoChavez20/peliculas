@@ -87,4 +87,40 @@ class PeliculaModel {
 
         return $peliculas;
     }
+
+
+/*
+public function verPeliculas($id){
+    $sql = $this->conexion->query("SELECT * FROM peliculas WHERE id='$id'");
+    return $sql->fetch_object();
+}
+
+public function verGeneros($id){
+    $sql = $this->conexion->query("SELECT genero_id FROM pelicula_generos WHERE pelicula_id='$id'");
+    $generos = [];
+    while($row = $sql->fetch_object()){
+        $generos[] = $row->genero_id;
+    }
+    return $generos;
+}
+
+public function editarPelicula($id,$titulo,$descripcion,$anio,$duracion,$idioma,$calificacion){
+    $stmt = $this->conexion->prepare("UPDATE peliculas SET titulo=?, descripcion=?, anio_estreno=?, duracion=?, idioma=?, calificacion=? WHERE id=?");
+    $stmt->bind_param("ssiiisi",$titulo,$descripcion,$anio,$duracion,$idioma,$calificacion,$id);
+    return $stmt->execute();
+}
+
+public function eliminarGeneros($id_pelicula){
+    $stmt = $this->conexion->prepare("DELETE FROM pelicula_generos WHERE pelicula_id=?");
+    $stmt->bind_param("i",$id_pelicula);
+    return $stmt->execute();
+}
+
+public function asignarGeneros($id_pelicula,$id_genero){
+    $stmt = $this->conexion->prepare("INSERT INTO pelicula_generos(pelicula_id,genero_id) VALUES(?,?)");
+    $stmt->bind_param("ii",$id_pelicula,$id_genero);
+    return $stmt->execute();
+}
+*/
+
 }
