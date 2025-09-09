@@ -38,3 +38,32 @@ if ($tipo == "listar") {
 
     echo json_encode($arr_Respuestas);
 }
+
+
+if ($tipo == "registrar" && $_POST) {
+    $titulo = $_POST['titulo'];
+    $descripcion = $_POST['descripcion'];
+    $anio_estreno = $_POST['anio_estreno'];
+    $duracion = $_POST['duracion'];
+    $idioma = $_POST['idioma'];
+    $calificacion = $_POST['calificacion'];
+    $generos = json_decode($_POST['generos'], true); // Array de géneros
+
+    if (empty($titulo) || empty($descripcion) || empty($anio_estreno) || empty($duracion) || empty($idioma) || empty($calificacion) || empty($generos)) {
+        echo json_encode(['status' => false, 'mensaje' => 'Campos vacíos']);
+        exit;
+    }
+
+    $idNueva = $objPelicula->registrarPelicula($titulo, $descripcion, $anio_estreno, $duracion, $idioma, $calificacion);
+
+    if ($idNueva > 0) {
+        foreach ($generos as $idGenero) {
+            if (!empty($idGenero)) {
+                $objPelicula->asignarGenero($idNueva, $idGenero);
+            }
+        }
+        echo json_encode(['status' => true, 'mensaje' => 'Película registrada correctamente']);
+    } else {
+        echo json_encode(['status' => false, 'mensaje' => 'Error al registrar la película']);
+    }
+}

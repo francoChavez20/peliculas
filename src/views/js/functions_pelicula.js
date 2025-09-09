@@ -22,7 +22,7 @@ async function listar_peliculas() {
                     <td>${item.duracion} min</td>
                     <td>${item.calificacion}</td>
                     <td>${item.idioma}</td>
-<td>${item.genero.join(', ')}</td>                    
+                    <td>${item.genero.join(', ')}</td>                    
                     <td>${item.options}</td>
                 `;
 
@@ -39,4 +39,42 @@ async function listar_peliculas() {
 // Ejecutar solo si existe la tabla
 if (document.querySelector('#tbl_peliculas')) {
     listar_peliculas();
+}
+
+
+async function registrar_pelicula() {
+    let frm = document.getElementById('frmRegistrarPelicula');
+
+    // Capturar los géneros seleccionados
+    let generos = Array.from(document.getElementById('generos').selectedOptions)
+                        .map(option => option.value)
+                        .filter(val => val !== ""); // elimina valores vacíos
+
+    if (generos.length === 0) {
+        alert("Debes seleccionar al menos un género.");
+        return;
+    }
+
+    const datos = new FormData(frm);
+    // Agregar los géneros como JSON
+    datos.append('generos', JSON.stringify(generos));
+
+    try {
+        let respuesta = await fetch(base_url + 'src/controller/Pelicula.php?tipo=registrar', {
+            method: 'POST',
+            body: datos
+        });
+
+        let json = await respuesta.json();
+
+        if (json.status) {
+            swal("Registro", json.mensaje, "success");
+            frm.reset(); // Limpiar formulario
+        } else {
+            swal("Error", json.mensaje, "error");
+        }
+
+    } catch (e) {
+        console.log("Oops, ocurrió un error: " + e);
+    }
 }

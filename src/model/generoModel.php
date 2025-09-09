@@ -43,4 +43,14 @@ class GeneroModel {
 
         return $generos;
     }
+
+    // Listar todos los géneros
+    public function listarGeneros() {
+        $sql = $this->conexion->query("SELECT id, nombre FROM generos ORDER BY nombre ASC");
+        $generos = [];
+        while ($row = $sql->fetch_object()) {
+            $generos[] = $row;
+        }
+        return $generos;
+    }
 }
