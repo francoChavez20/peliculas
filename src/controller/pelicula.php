@@ -20,13 +20,16 @@ if ($tipo == "listar") {
 
             // Botones de acción
             $opciones = '
-            <a href="' . BASE_URL . 'editar-pelicula.php?id=' . $id_pelicula . '" class="btn btn-warning">
-                <i class="fa fa-pencil"></i> Editar
-            </a>
+           
+    <div class="d-flex justify-content-start gap-2">
+        <a href="' . BASE_URL . 'editar-pelicula.php?id=' . $id_pelicula . '" class="btn btn-warning btn-sm d-inline-flex align-items-center">
+            <i class="fa fa-pencil"></i> Editar
+        </a>
+        <button onclick="eliminar_pelicula(' . $id_pelicula . ');" class="btn btn-danger btn-sm d-inline-flex align-items-center">
+            <i class="fa fa-trash"></i> Eliminar
+        </button>
+    </div>';
 
-            <button onclick="eliminar_pelicula(' . $id_pelicula . ');" class="btn btn-danger">
-                <i class="fa fa-trash"></i> Eliminar
-            </button>';
 
             $arr_peliculas[$i]->options = $opciones;
         }
