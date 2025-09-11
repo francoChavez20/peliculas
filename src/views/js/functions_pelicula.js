@@ -42,27 +42,39 @@ if (document.querySelector('#tbl_peliculas')) {
 }
 
 
+async function registrar_pelicula() {
+    // Obtener valores de los inputs
+    let titulo = document.querySelector('#titulo').value;
+    let descripcion = document.querySelector('#descripcion').value;
+    let anio_estreno = document.querySelector('#anio_estreno').value;
+    let duracion = document.querySelector('#duracion').value;
+    let calificacion = document.querySelector('#calificacion').value;
+    let idioma = document.querySelector('#idioma').value;
+    let genero = document.querySelector('#genero').value;
 
-/*async function registrar_pelicula() {
-    let frm = document.getElementById('frmRegistrarPelicula');
-
-    // Capturar los géneros seleccionados
-    let generos = Array.from(document.getElementById('generos').selectedOptions)
-                        .map(option => option.value)
-                        .filter(val => val !== ""); // elimina valores vacíos
-
-    if (generos.length === 0) {
-        alert("Debes seleccionar al menos un género.");
+    // Validación básica
+    if (
+        titulo === "" ||
+        descripcion === "" ||
+        anio_estreno === "" ||
+        duracion === "" ||
+        calificacion === "" ||
+        idioma === "" ||
+        genero === ""
+    ) {
+        swal("Error", "Todos los campos son obligatorios", "error");
         return;
     }
 
-    const datos = new FormData(frm);
-    // Agregar los géneros como JSON
-    datos.append('generos', JSON.stringify(generos));
-
     try {
+        // Capturamos el formulario
+        const datos = new FormData(frmRegistrarPelicula);
+
+        // Enviamos al controlador PHP
         let respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=registrar', {
             method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
             body: datos
         });
 
@@ -70,94 +82,105 @@ if (document.querySelector('#tbl_peliculas')) {
 
         if (json.status) {
             swal("Registro", json.mensaje, "success");
-            frm.reset(); // Limpiar formulario
+            frmRegistrarPelicula.reset(); // limpiar formulario
         } else {
-            swal("Error", json.mensaje, "error");
+            swal("Registro", json.mensaje, "error");
         }
 
+        console.log(json);
     } catch (e) {
-        console.log("Oops, ocurrió un error: " + e);
+        console.log("Oops ocurrió un error: " + e);
     }
 }
 
-*/
+async function editar_pelicula(id) {
+    const formData = new FormData();
+    formData.append('id_pelicula', id);
 
-
-/*// 3️⃣ Cargar película y marcar géneros
-async function cargarPelicula(id) {
     try {
-        let res = await fetch(base_url + 'src/controller/pelicula.php?tipo=ver&id=' + id);
-        let json = await res.json();
+        let respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=ver', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: formData
+        });
+
+        const json = await respuesta.json();
 
         if (json.status) {
-            let p = json.data;
-            document.getElementById('pelicula_id').value = p.id;
-            document.getElementById('titulo').value = p.titulo;
-            document.getElementById('descripcion').value = p.descripcion;
-            document.getElementById('anio_estreno').value = p.anio_estreno;
-            document.getElementById('duracion').value = p.duracion;
-            document.getElementById('idioma').value = p.idioma;
-            document.getElementById('calificacion').value = p.calificacion;
+            // Guardamos el ID en el hidden
+            document.querySelector('#id_pelicula').value = json.contenido.id;
 
-            await listar_generos(); // cargar todos los géneros
+            // Llenamos los demás campos
+            document.querySelector('#titulo').value = json.contenido.titulo;
+            document.querySelector('#descripcion').value = json.contenido.descripcion;
+            document.querySelector('#anio_estreno').value = json.contenido.anio_estreno;
+            document.querySelector('#duracion').value = json.contenido.duracion;
+            document.querySelector('#calificacion').value = json.contenido.calificacion;
+            document.querySelector('#idioma').value = json.contenido.idioma;
+            document.querySelector('#genero').value = json.contenido.genero;
 
-            // 4️⃣ Marcar géneros existentes
-            let select = document.getElementById('generos');
-            Array.from(select.options).forEach(opt => {
-                if (p.generos.includes(parseInt(opt.value))) {
-                    opt.selected = true;
-                }
-            });
         } else {
-            swal("Error", "No se pudo cargar la película", "error");
+            window.location = base_url + "peliculas";
         }
-    } catch (e) {
-        console.log("Error al cargar la película: " + e);
+
+    } catch (error) {
+        console.log("Oops, ocurrió un error: " + error);
     }
 }
 
-// 5️⃣ Guardar cambios
-async function editar_pelicula() {
-    let frm = document.getElementById('frmEditarPelicula');
-    let generos = Array.from(document.getElementById('generos').selectedOptions)
-                        .map(o => o.value)
-                        .filter(v => v !== "");
 
-    if (generos.length === 0) {
-        alert("Debes seleccionar al menos un género");
+async function actualizar_pelicula() {
+    // Tomamos los valores del formulario
+    const id = document.querySelector('#id_pelicula').value; // Necesitas un input hidden con el id
+    const titulo = document.querySelector('#titulo').value;
+    const descripcion = document.querySelector('#descripcion').value;
+    const anio_estreno = document.querySelector('#anio_estreno').value;
+    const duracion = document.querySelector('#duracion').value;
+    const calificacion = document.querySelector('#calificacion').value;
+    const idioma = document.querySelector('#idioma').value;
+    const genero = document.querySelector('#genero').value;
+
+    // Validación simple
+    if (!titulo || !descripcion || !anio_estreno || !duracion || !calificacion || !idioma || !genero) {
+        swal("Error", "Por favor completa todos los campos", "error");
         return;
     }
 
-    const datos = new FormData(frm);
-    datos.append('generos', JSON.stringify(generos));
-
     try {
-        let res = await fetch(base_url + 'src/controller/pelicula.php?tipo=editar', {
+        const formData = new FormData();
+        formData.append('id_pelicula', id);
+        formData.append('titulo', titulo);
+        formData.append('descripcion', descripcion);
+        formData.append('anio_estreno', anio_estreno);
+        formData.append('duracion', duracion);
+        formData.append('calificacion', calificacion);
+        formData.append('idioma', idioma);
+        formData.append('genero', genero);
+
+        let respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=editar', {
             method: 'POST',
-            body: datos
+            mode: 'cors',
+            cache: 'no-cache',
+            body: formData
         });
-        let json = await res.json();
+
+        const json = await respuesta.json();
+
         if (json.status) {
-            swal("Actualizado", json.mensaje, "success");
+            swal("Éxito", json.mensaje, "success")
+                .then(() => {
+                    window.location = base_url + "peliculas"; // Redirige al listado
+                });
         } else {
             swal("Error", json.mensaje, "error");
         }
-    } catch (e) {
-        console.log("Error al editar: " + e);
+
+        console.log(json);
+
+    } catch (error) {
+        console.log("Oops, ocurrió un error: " + error);
     }
 }
 
-function getIdFromPath() {
-    const path = window.location.pathname; // /peliculas/editar-pelicula/7
-    const parts = path.split('/');
-    return parts[parts.length - 1]; // devuelve 7
-}
 
-window.onload = async function() {
-    const peliculaId = getIdFromPath();
-    if (peliculaId) {
-        await cargarPelicula(peliculaId);
-    } else {
-        swal("Error", "No se especificó el ID de la película", "error");
-    }
-};*/

@@ -22,7 +22,7 @@ if ($tipo == "listar") {
             $opciones = '
            
     <div class="d-flex justify-content-start gap-2">
-        <a href="' . BASE_URL . 'editar-pelicula.php?id=' . $id_pelicula . '" class="btn btn-warning btn-sm d-inline-flex align-items-center">
+        <a href="' .BASE_URL.'editar-pelicula/'. $id_pelicula.'" class="btn btn-warning btn-sm d-inline-flex align-items-center">
             <i class="fa fa-pencil"></i> Editar
         </a>
         <button onclick="eliminar_pelicula(' . $id_pelicula . ');" class="btn btn-danger btn-sm d-inline-flex align-items-center">
@@ -41,3 +41,77 @@ if ($tipo == "listar") {
     echo json_encode($arr_Respuestas);
 }
 
+
+if ($tipo == "registrar") {
+    if ($_POST) {
+        $titulo       = $_POST['titulo'];
+        $descripcion  = $_POST['descripcion'];
+        $anio_estreno = $_POST['anio_estreno'];
+        $duracion     = $_POST['duracion'];
+        $calificacion = $_POST['calificacion'];
+        $idioma       = $_POST['idioma'];
+        $genero       = $_POST['genero'];
+
+        if ($titulo == "" || $descripcion == "" || $anio_estreno == "" || $duracion == "" || 
+            $calificacion == "" || $idioma == "" || $genero == "") {
+
+            $arr_Respuestas = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+        } else {
+            $arrPelicula = $objPelicula->registrarPelicula($titulo, $descripcion, $anio_estreno, $duracion, $calificacion, $idioma, $genero);
+
+            if ($arrPelicula['id'] > 0) {
+                $arr_Respuestas = array('status' => true, 'mensaje' => 'Película registrada con éxito');
+            } else {
+                $arr_Respuestas = array('status' => false, 'mensaje' => 'Error al registrar película');
+            }
+        }
+        echo json_encode($arr_Respuestas);
+    }
+}
+
+/* === EDITAR PELÍCULA === */
+if ($tipo == "editar") {
+    if ($_POST) {
+        $id           = $_POST['id_pelicula'];
+        $titulo       = $_POST['titulo'];
+        $descripcion  = $_POST['descripcion'];
+        $anio_estreno = $_POST['anio_estreno'];
+        $duracion     = $_POST['duracion'];
+        $calificacion = $_POST['calificacion'];
+        $idioma       = $_POST['idioma'];
+        $genero       = $_POST['genero'];
+
+        if ($id == "" || $titulo == "" || $descripcion == "" || $anio_estreno == "" || 
+            $duracion == "" || $calificacion == "" || $idioma == "" || $genero == "") {
+
+            $arr_Respuestas = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+        } else {
+            $editado = $objPelicula->editarPelicula(
+                $id, $titulo, $descripcion, $anio_estreno, $duracion, $calificacion, $idioma, $genero
+            );
+
+            if ($editado) {
+                $arr_Respuestas = array('status' => true, 'mensaje' => 'Película actualizada con éxito');
+            } else {
+                $arr_Respuestas = array('status' => false, 'mensaje' => 'Error al actualizar película');
+            }
+        }
+        echo json_encode($arr_Respuestas);
+    }
+}
+
+/* === VER PELÍCULA (para precargar el form) === */
+if ($tipo == "ver") {
+    if ($_POST) {
+        $id = $_POST['id_pelicula'];
+        $pelicula = $objPelicula->obtenerPelicula($id);
+
+        if ($pelicula) {
+            $arr_Respuestas = array('status' => true, 'contenido' => $pelicula);
+        } else {
+            $arr_Respuestas = array('status' => false, 'mensaje' => 'Película no encontrada');
+        }
+        echo json_encode($arr_Respuestas);
+    }
+}
+?>

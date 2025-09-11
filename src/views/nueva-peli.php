@@ -4,7 +4,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 90vh; /* ocupa toda la altura de la pantalla */
+        height: 90vh;
         background-color: #f0f2f5;
     }
 
@@ -41,9 +41,6 @@
 
     input[type="text"],
     input[type="number"],
-    input[type="date"],
-    input[type="file"],
-    select,
     textarea {
         width: 100%;
         padding: 10px;
@@ -77,7 +74,6 @@
     }
 
     input:focus,
-    select:focus,
     textarea:focus {
         border-color: #4CAF50;
         outline: none;
@@ -130,14 +126,10 @@
         </div>
 
         <div>
-            <label for="generos">Géneros</label>
-            <select name="generos[]" id="generos" multiple required>
-                <option value="">-- Seleccione géneros --</option>
-            </select>
-            <small>Puedes seleccionar varios manteniendo presionada la tecla CTRL o SHIFT.</small>
+            <label for="genero">Género(s)</label>
+            <input type="text" id="genero" name="genero" placeholder="Ej: Acción, Drama, Comedia" required>
+            <small>Separa varios géneros con coma (,)</small>
         </div>
-
-        
 
         <button type="button" class="button" onclick="registrar_pelicula();">Guardar Película</button>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -146,5 +138,3 @@
 
 <!-- JS -->
 <script src="<?php echo BASE_URL ?>src/views/js/functions_pelicula.js"></script>
-<script src="<?php echo BASE_URL ?>src/views/js/functions_genero.js"></script>
-<script>listar_generos();</script>
