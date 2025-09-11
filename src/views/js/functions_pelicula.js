@@ -1,7 +1,7 @@
 async function listar_peliculas() {
     try {
         // Llamada al controlador de películas
-        let respuesta = await fetch(base_url+'src/controller/pelicula.php?tipo=listar');
+        let respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=listar');
         let json = await respuesta.json();
 
         if (json.status) {
@@ -22,7 +22,7 @@ async function listar_peliculas() {
                     <td>${item.duracion} min</td>
                     <td>${item.calificacion}</td>
                     <td>${item.idioma}</td>
-                    <td>${item.genero.join(', ')}</td>                    
+                    <td>${item.genero}</td>                    
                     <td>${item.options}</td>
                 `;
 
@@ -42,7 +42,8 @@ if (document.querySelector('#tbl_peliculas')) {
 }
 
 
-async function registrar_pelicula() {
+
+/*async function registrar_pelicula() {
     let frm = document.getElementById('frmRegistrarPelicula');
 
     // Capturar los géneros seleccionados
@@ -79,26 +80,8 @@ async function registrar_pelicula() {
     }
 }
 
+*/
 
-// 2️⃣ Listar géneros
-async function listar_generos() {
-    try {
-        let res = await fetch(base_url + 'src/controller/genero.php?tipo=listar');
-        let json = await res.json();
-        let select = document.getElementById('generos');
-        select.innerHTML = "";
-        if (json.status) {
-            json.data.forEach(g => {
-                let option = document.createElement('option');
-                option.value = g.id;
-                option.text = g.nombre;
-                select.add(option);
-            });
-        }
-    } catch (e) {
-        console.log("Error al listar géneros: " + e);
-    }
-}
 
 /*// 3️⃣ Cargar película y marcar géneros
 async function cargarPelicula(id) {
