@@ -67,6 +67,14 @@ class PeliculaModel {
         $stmt->bind_param("ssissssi", $titulo, $descripcion, $anio_estreno, $duracion, $calificacion, $idioma, $genero, $id);
         return $stmt->execute();
     }
+
+    public function eliminarPelicula($id) {
+    $sql = "DELETE FROM peliculas WHERE id = ?";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->bind_param("i", $id);
+    return $stmt->execute();
+}
+
 }
     
 

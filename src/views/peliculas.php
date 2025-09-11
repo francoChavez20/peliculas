@@ -52,5 +52,6 @@
     </div>
 
     <!-- Script -->
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="<?php echo BASE_URL ?>src/views/js/functions_pelicula.js"></script>
 </div>

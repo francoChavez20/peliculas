@@ -114,4 +114,42 @@ if ($tipo == "ver") {
         echo json_encode($arr_Respuestas);
     }
 }
+
+
+if ($tipo == "eliminar") {
+    $id_pelicula = $_POST['id_pelicula'];
+    
+    try {
+        $arr_Respuesta = $objPelicula->eliminarPelicula($id_pelicula);
+        
+        if ($arr_Respuesta) {
+            $response = array(
+                'status' => true,
+                'message' => 'Película eliminada correctamente.'
+            );
+        } else {
+            $response = array(
+                'status' => false,
+                'message' => 'No se encontró la película o no pudo ser eliminada.'
+            );
+        }
+    } catch (PDOException $e) {
+        // Verificamos si el error es debido a una restricción de clave foránea
+        if ($e->getCode() == '23000') { // Código SQLSTATE para restricciones de integridad
+            $response = array(
+                'status' => false,
+                'message' => 'No se puede eliminar esta película porque está asociada a otros registros.'
+            );
+        } else {
+            // Otro tipo de error
+            $response = array(
+                'status' => false,
+                'message' => 'Ocurrió un error inesperado: ' . $e->getMessage()
+            );
+        }
+    }
+
+    echo json_encode($response);
+}
+
 ?>

@@ -5,52 +5,102 @@ require_once "./src/config/config.php";
 $conn = new mysqli(BD_HOST, BD_USER, BD_PASSWORD, BD_NAME);
 $conn->set_charset("utf8");
 
-// Contar géneros
-$result = $conn->query("SELECT COUNT(*) as total FROM generos");
-$generos = $result->fetch_assoc()['total'];
-
 // Contar películas
-$result = $conn->query("SELECT COUNT(*) as total FROM peliculas");
-$peliculas = $result->fetch_assoc()['total'];
+$result = $conn->query("SELECT COUNT(*) AS total FROM peliculas");
+$peliculas = ($result) ? $result->fetch_assoc()['total'] : 0;
 
 // Contar usuarios
-$result = $conn->query("SELECT COUNT(*) as total FROM usuario");
-$usuarios = $result->fetch_assoc()['total'];
+$result = $conn->query("SELECT COUNT(*) AS total FROM usuario");
+$usuarios = ($result) ? $result->fetch_assoc()['total'] : 0;
 
 $conn->close();
 ?>
 
-<div class="d-flex gap-3" style="width:100%; padding:1rem;">
-  <!-- Tarjeta Géneros -->
-  <div class="flex-fill" style="border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1.5rem; display:flex; justify-content:space-between; align-items:center; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-    <div>
-      <h5>Géneros</h5>
-      <h3><?= $generos ?></h3>
-    </div>
-    <div style="font-size:2.5rem; color:#3b82f6;">
-      <i class="bi bi-card-list"></i>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Tarjeta Películas -->
-  <div class="flex-fill" style="border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1.5rem; display:flex; justify-content:space-between; align-items:center; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-    <div>
-      <h5>Películas</h5>
-      <h3><?= $peliculas ?></h3>
-    </div>
-    <div style="font-size:2.5rem; color:#3b82f6;">
-      <i class="bi bi-film"></i>
-    </div>
-  </div>
+    <style>
+      
 
-  <!-- Tarjeta Usuarios -->
-  <div class="flex-fill" style="border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1.5rem; display:flex; justify-content:space-between; align-items:center; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-    <div>
-      <h5>Usuarios</h5>
-      <h3><?= $usuarios ?></h3>
+        .dashboard-container {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-dashboard {
+            flex: 1 1 250px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-dashboard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .card-dashboard h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .card-dashboard h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="mb-4">Dashboard</h1>
+
+    <div class="dashboard-container">
+
+        <!-- Tarjeta Películas -->
+        <div class="card-dashboard">
+            <div>
+                <h5>Películas Registradas</h5>
+                <h3><?= $peliculas ?></h3>
+            </div>
+            <div class="card-icon">
+                <i class="bi bi-film"></i>
+            </div>
+        </div>
+
+        <!-- Tarjeta Usuarios -->
+        <div class="card-dashboard">
+            <div>
+                <h5>Usuarios Registrados</h5>
+                <h3><?= $usuarios ?></h3>
+            </div>
+            <div class="card-icon">
+                <i class="bi bi-people"></i>
+            </div>
+        </div>
+
     </div>
-    <div style="font-size:2.5rem; color:#3b82f6;">
-      <i class="bi bi-people"></i>
-    </div>
-  </div>
-</div>
+
+</body>
+</html>

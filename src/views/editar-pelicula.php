@@ -120,11 +120,13 @@
             </div>
 
             <button type="button" class="button" onclick="actualizar_pelicula();">Actualizar</button>
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            
         </form>
     </div>
 
     <!-- JS -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="<?php echo BASE_URL ?>src/views/js/functions_pelicula.js"></script>
 
 

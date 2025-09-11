@@ -184,3 +184,41 @@ async function actualizar_pelicula() {
 }
 
 
+async function eliminar_pelicula(id) {
+    swal({
+        title: "¿Estás seguro de eliminar esta película?",
+        text: "No podrás recuperarla",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then(async (willDelete) => {
+        if (willDelete) {
+            try {
+                const formData = new FormData();
+                formData.append('id_pelicula', id);
+
+                const respuesta = await fetch(base_url + 'src/controller/pelicula.php?tipo=eliminar', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const json = await respuesta.json();
+
+                if (json.status) {
+                    swal("Éxito", json.message, "success")
+                        .then(() => {
+                            location.reload(); // recarga el listado
+                        });
+                } else {
+                    swal("Error", json.message, "error");
+                }
+
+            } catch (error) {
+                console.log("Error al eliminar película: " + error);
+            }
+        }
+    });
+}
+
+
+
