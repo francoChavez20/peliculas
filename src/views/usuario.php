@@ -5,7 +5,7 @@
             <div class="col-sm-12 d-flex justify-content-between align-items-center">
                 <h1 class="m-0">Listado de Usuarios</h1>
                 <a href="<?php echo BASE_URL;?>nuevo-usuario">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-primary">
                         <i class="fa fa-plus"></i> Agregar Nuevo Usuario
                     </button>
                 </a>

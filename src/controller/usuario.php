@@ -16,13 +16,13 @@ if ($tipo == "listar") {
             // Botones de acción
             $opciones = '
             <div class="d-flex justify-content-start gap-2">
-                <a href="' . BASE_URL . 'editar-usuario/' . $id_usuario . '" class="btn btn-warning btn-sm d-inline-flex align-items-center">
-                    <i class="fa fa-pencil"></i> Editar
-                </a>
-                <button onclick="eliminar_usuario(' . $id_usuario . ');" class="btn btn-danger btn-sm d-inline-flex align-items-center">
-                    <i class="fa fa-trash"></i> Eliminar
-                </button>
-            </div>';
+    <a href="' . BASE_URL . 'editar-usuario/' . $id_usuario . '" 
+       class="btn btn-warning btn-sm px-4 d-inline-flex align-items-center">
+        <i class="fa fa-pencil"></i> Editar
+    </a>
+</div>
+';
+
 
             $arr_usuarios[$i]->options = $opciones;
         }

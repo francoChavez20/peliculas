@@ -29,8 +29,6 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-      
-
         .dashboard-container {
             display: flex;
             gap: 1.5rem;
@@ -47,6 +45,8 @@ $conn->close();
             align-items: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none; /* quita subrayado */
+            color: inherit; /* mantiene color de texto */
         }
 
         .card-dashboard:hover {
@@ -77,9 +77,8 @@ $conn->close();
     <h1 class="mb-4">Dashboard</h1>
 
     <div class="dashboard-container">
-
         <!-- Tarjeta Películas -->
-        <div class="card-dashboard">
+        <a href="<?php echo BASE_URL;?>peliculas" class="card-dashboard">
             <div>
                 <h5>Películas Registradas</h5>
                 <h3><?= $peliculas ?></h3>
@@ -87,10 +86,10 @@ $conn->close();
             <div class="card-icon">
                 <i class="bi bi-film"></i>
             </div>
-        </div>
+        </a>
 
         <!-- Tarjeta Usuarios -->
-        <div class="card-dashboard">
+        <a href="<?php echo BASE_URL;?>usuario" class="card-dashboard">
             <div>
                 <h5>Usuarios Registrados</h5>
                 <h3><?= $usuarios ?></h3>
@@ -98,8 +97,7 @@ $conn->close();
             <div class="card-icon">
                 <i class="bi bi-people"></i>
             </div>
-        </div>
-
+        </a>
     </div>
 
 </body>

@@ -52,10 +52,28 @@
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
+        margin-bottom: 10px; /* separación con el botón eliminar */
     }
 
     .button:hover {
         background-color: #45a049;
+    }
+
+    .button-delete {
+        width: 100%;
+        padding: 12px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .button-delete:hover {
+        background-color: #c0392b;
     }
 
     input:focus,
@@ -103,7 +121,14 @@
             </select>
         </div>
 
+        <!-- Botón Guardar -->
         <button type="button" class="button" onclick="registrar_usuario();">Guardar Usuario</button>
+
+
+<a href="<?php echo BASE_URL;?>usuario"> <button type="button" class="button-delete">Eliminar Usuario</button>
+</a>
+        <!-- Botón Eliminar -->
+       
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </form>
 </div>
