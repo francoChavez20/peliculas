@@ -76,53 +76,35 @@
 </head>
 
 <body>
-    <div class="form-container">
-        <form class="form" action="" id="frmEditarPelicula">
+   <div class="form-container">
+    <form class="form" id="frmEditarUsuario">
+        <h2>Editar Usuario</h2>
+        <input type="hidden" id="id_usuario" name="id_usuario">
 
+        <div>
+            <label for="nombres">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
 
-        <input type="hidden" id="id_pelicula" name="id_pelicula">
+        <div>
+            <label for="apellidos">Apellido</label>
+            <input type="text" id="apellido" name="apellido" required>
+        </div>
 
-            <h2>Editar Película</h2>
+        <div>
+            <label for="rol">Rol</label>
+            <select id="rol" name="rol" required>
+                <option value="">Seleccione un rol</option>
+                <option value="admin">Administrador</option>
+                <option value="usuario">Usuario</option>
+            </select>
+        </div>
 
-            <div>
-                <label for="titulo">Título</label>
-                <input type="text" id="titulo" name="titulo" required>
-            </div>
+        <button type="button" class="button" onclick="actualizar_usuario();">Actualizar Usuario</button>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </form>
+</div>
 
-            <div>
-                <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" name="descripcion" required></textarea>
-            </div>
-
-            <div>
-                <label for="anio_estreno">Año de Estreno</label>
-                <input type="number" id="anio_estreno" name="anio_estreno" required>
-            </div>
-
-            <div>
-                <label for="duracion">Duración (minutos)</label>
-                <input type="number" id="duracion" name="duracion" required>
-            </div>
-
-            <div>
-                <label for="calificacion">Calificación</label>
-                <input type="text" id="calificacion" name="calificacion" required>
-            </div>
-
-            <div>
-                <label for="idioma">Idioma</label>
-                <input type="text" id="idioma" name="idioma" required>
-            </div>
-
-            <div>
-                <label for="genero">Género(s)</label>
-                <input type="text" id="genero" name="genero" placeholder="Ej: Acción, Drama" required>
-            </div>
-
-            <button type="button" class="button" onclick="actualizar_pelicula();">Actualizar</button>
-            
-        </form>
-    </div>
 
     <!-- JS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

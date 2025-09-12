@@ -180,7 +180,7 @@
       <div class="section-title">Menus</div>
       <ul class="nav flex-column">
         <li><a class="nav-link" href="<?php echo BASE_URL;?>peliculas"><i class="bi bi-film me-2"></i> Peliculas</a></li>
-        <li><a class="nav-link" href="<?php echo BASE_URL;?>generos"><i class="bi bi-card-list me-2"></i> Usuarios</a></li>
+        <li><a class="nav-link" href="<?php echo BASE_URL;?>usuario"><i class="bi bi-card-list me-2"></i> Usuarios</a></li>
       </ul>
 
       <div class="section-title">Cerrar Sesión</div>
