@@ -30,7 +30,7 @@
     }
 
     input[type="text"],
-    input[type="password"],
+    input[type="email"],
     select {
         width: 100%;
         padding: 10px;
@@ -52,7 +52,7 @@
         font-size: 16px;
         font-weight: bold;
         transition: background-color 0.3s ease;
-        margin-bottom: 10px; /* separación con el botón eliminar */
+        margin-bottom: 10px;
     }
 
     .button:hover {
@@ -93,45 +93,54 @@
 
 <!-- Contenedor centrado -->
 <div class="form-container">
-    <form class="form" action="" id="frmRegistrarUsuario" autocomplete="off">
-        <h2>Registrar Usuario</h2>
+    <form class="form" action="" id="frmRegistrarCliente" autocomplete="off">
+        <h2>Registrar Cliente</h2>
+
+        <div>
+            <label for="dni">DNI</label>
+            <input type="text" id="dni" name="dni" placeholder="Número de DNI" required>
+        </div>
 
         <div>
             <label for="nombre">Nombre</label>
-            <input type="text" id="nombres" name="nombre" placeholder="Nombre del usuario" required>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre del cliente" required>
         </div>
 
         <div>
             <label for="apellido">Apellido</label>
-            <input type="text" id="apellidos" name="apellido" placeholder="Apellido del usuario" required>
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido del cliente" required>
         </div>
 
         <div>
-            <label for="password">Contraseña</label>
-            <input type="password" id="passwords" name="password" placeholder="Contraseña segura" required>
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" placeholder="Teléfono del cliente" required>
         </div>
 
         <div>
-            <label for="rol">Rol</label>
-            <select id="rol_reg" name="rol" required>
-                <option value="">Seleccione un rol</option>
-                <option value="administrador">Administrador</option>
-                <option value="gerente">Gerente</option>
-                <option value="usuario">Usuario</option>
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+        </div>
+
+        <div>
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado" required>
+                <option value="">Seleccione estado</option>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
             </select>
         </div>
 
         <!-- Botón Guardar -->
-        <button type="button" class="button" onclick="registrar_usuario();">Guardar Usuario</button>
+        <button type="button" class="button" onclick="registrar_cliente();">Guardar Cliente</button>
 
+        <!-- Botón Cancelar -->
+        <a href="<?php echo BASE_URL;?>cliente">
+            <button type="button" class="button-delete">Cancelar</button>
+        </a>
 
-<a href="<?php echo BASE_URL;?>usuario"> <button type="button" class="button-delete">Cancelar</button>
-</a>
-        <!-- Botón Eliminar -->
-       
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </form>
 </div>
 
 <!-- JS -->
-<script src="<?php echo BASE_URL ?>src/views/js/functions_usuario.js"></script>
+<script src="<?php echo BASE_URL ?>src/views/js/functions_cliente.js"></script>
