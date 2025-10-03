@@ -33,14 +33,42 @@ async function listar_tokens() {
 if (document.querySelector('#tbl_tokens')) {
     listar_tokens();
 }
+// ===================== CARGAR CLIENTES EN SELECT =====================
+// ===================== CARGAR CLIENTES EN SELECT =====================
+async function cargarClientes() {
+    try {
+        let respuesta = await fetch(base_url + 'src/controller/token.php?tipo=listarClientes');
+        let json = await respuesta.json();
+
+        if (json.status) {
+            let select = document.querySelector('#id_cliente');
+            select.innerHTML = '<option value="">Seleccione un cliente</option>'; // resetear
+
+            json.contenido.forEach(cliente => {
+                let option = document.createElement("option");
+                option.value = cliente.id;          // ID de la tabla cliente_api
+                option.textContent = cliente.nombre; // Nombre que se mostrará
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.log("Error al cargar clientes: " + error);
+    }
+}
+
+// Ejecutar solo si el select existe en la página
+if (document.querySelector('#id_cliente')) {
+    cargarClientes();
+}
+
 
 
 // ===================== REGISTRAR TOKEN =====================
 async function registrar_token() {
     let idCliente = document.querySelector('#id_cliente').value;
-    let token = document.querySelector('#token').value;
+    let estado = document.querySelector('#estado').value;
 
-    if (!idCliente || !token) {
+    if (!idCliente || !estado) {
         swal("Error", "Todos los campos son obligatorios", "error");
         return;
     }
@@ -54,12 +82,14 @@ async function registrar_token() {
     const json = await respuesta.json();
 
     if (json.status) {
-        swal("Registro", json.mensaje, "success");
+        // Mostrar el token generado en la alerta
+        swal("Registro", `${json.mensaje}\nToken: ${json.token}\nFecha: ${json.fecha}`, "success");
         document.querySelector('#frmRegistrarToken').reset();
     } else {
         swal("Error", json.mensaje, "error");
     }
 }
+
 
 
 // ===================== EDITAR TOKEN =====================

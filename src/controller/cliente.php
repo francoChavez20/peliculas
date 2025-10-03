@@ -1,8 +1,10 @@
 <?php
 require_once('../model/clienteModel.php');
+require_once('../model/tokenModel.php');
 
 $tipo = $_REQUEST['tipo'];
 $objCliente = new ClienteModel();
+$objToken = new TokenModel();
 
 /* === LISTAR CLIENTES === */
 if ($tipo == "listar") {
@@ -140,5 +142,23 @@ if ($tipo == "eliminar") {
     }
 
     echo json_encode($response);
+}
+
+
+
+/* === apiiiiiiiiiiiiiiiiiii === */
+
+if ($tipo == 'verPelicula') {
+$token = explode("-", $token);
+$id_cliente = $token_arr[2];
+$arr_clientes = $objCliente->obtenerCliente($id_cliente);
+if ($arr_clientes ->estado) {
+    $data = $_POST['data'];
+    
+
+}else {
+    
+}
+
 }
 ?>

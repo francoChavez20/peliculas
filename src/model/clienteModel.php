@@ -71,5 +71,23 @@ public function obtener_clientes() {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function getClientes() {
+    $sql = "SELECT id, nombre, apellido FROM `cliente-api` ORDER BY nombre ASC";
+    $result = $this->conexion->query($sql);
+
+    $clientes = [];
+    while ($row = $result->fetch_assoc()) {
+        $clientes[] = $row;
+    }
+    return $clientes;
+}
+
+
+
+
+
+
+
 }
 ?>
