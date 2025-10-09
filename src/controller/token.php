@@ -77,5 +77,53 @@ if ($tipo == "registrar") {
     }
 }
 
-
-/* === VER, EDITAR y ELIMINAR se mantienen igual... */
+/* === EDITAR TOKEN === */
+if ($tipo == "editar") {
+    if ($_POST) {
+        $id = $_POST['id_token'];
+        $idCliente = $_POST['id_cliente_api'];
+        $token = $_POST['token'];
+        $estado = $_POST['estado'];
+        if ($id == "" || $idCliente == "" || $token == "" || $estado == "") {
+            $arr_Respuestas = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+        } else {
+            $editado = $objToken->editarToken($id, $idCliente, $token, $estado);
+            if ($editado) {
+                $arr_Respuestas = array('status' => true, 'mensaje' => 'Token actualizado con éxito');
+            } else {
+                $arr_Respuestas = array('status' => false, 'mensaje' => 'Error al actualizar token');
+            }
+        }
+        echo json_encode($arr_Respuestas);
+    }
+} /* === VER TOKEN (precargar form) === */
+if ($tipo == "ver") {
+    if ($_POST) {
+        $id = $_POST['id_token'];
+        $token = $objToken->obtenerToken($id);
+        if ($token) {
+            $arr_Respuestas = array('status' => true, 'contenido' => $token);
+        } else {
+            $arr_Respuestas = array('status' => false, 'mensaje' => 'Token no encontrado');
+        }
+        echo json_encode($arr_Respuestas);
+    }
+} /* === ELIMINAR TOKEN === */
+if ($tipo == "eliminar") {
+    $id_token = $_POST['id_token'];
+    try {
+        $arr_Respuesta = $objToken->eliminarToken($id_token);
+        if ($arr_Respuesta) {
+            $response = array('status' => true, 'message' => 'Token eliminado correctamente.');
+        } else {
+            $response = array('status' => false, 'message' => 'No se encontró el token o no pudo ser eliminado.');
+        }
+    } catch (PDOException $e) {
+        if ($e->getCode() == '23000') {
+            $response = array('status' => false, 'message' => 'No se puede eliminar este token porque está asociado a otros registros.');
+        } else {
+            $response = array('status' => false, 'message' => 'Ocurrió un error inesperado: ' . $e->getMessage());
+        }
+    }
+    echo json_encode($response);
+}

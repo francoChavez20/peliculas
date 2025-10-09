@@ -146,7 +146,7 @@ if ($tipo == "eliminar") {
 
 
 
-/* === apiiiiiiiiiiiiiiiiiii === */
+/* === apiiiiiiiiiiiiiiiiiii === 
 
 if ($tipo == 'verPelicula') {
 $token = explode("-", $token);
@@ -158,7 +158,7 @@ if ($arr_clientes ->estado) {
 
 }else {
     
-}
+}*/
 
-}
+
 ?>

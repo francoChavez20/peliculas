@@ -32,7 +32,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Nro</th>
-                        <th>ID Cliente</th>
+                        <th>Cliente</th>
                         <th>Token</th>
                         <th>Fecha Registro</th>
                         <th>Estado</th>

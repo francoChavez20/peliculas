@@ -12,16 +12,16 @@ class TokenModel {
     public function obtener_tokens() {
         $arrRespuesta = array();
         $sql = "SELECT t.id, 
-                       t.`id-cliente-api`, 
+                       t.`id_cliente_api`, 
                        c.nombre AS cliente, 
                        t.token, 
-                       t.`fecha-registro`,
+                       t.fecha_registro,
                        CASE 
                            WHEN t.estado = 1 THEN 'Activo' 
                            ELSE 'Inactivo' 
                        END AS estado
                 FROM `tokens` t
-                INNER JOIN `cliente-api` c ON t.`id-cliente-api` = c.id";
+                INNER JOIN `cliente_api` c ON t.`id_cliente_api` = c.id";
 
         $respuesta = $this->conexion->query($sql);
         while ($objeto = $respuesta->fetch_object()) {
@@ -33,7 +33,7 @@ class TokenModel {
     /* === LISTAR CLIENTES === */
     public function obtener_clientes() {
         $arrRespuesta = array();
-        $sql = "SELECT id, nombre FROM `cliente-api` ORDER BY nombre ASC";
+        $sql = "SELECT id, nombre FROM `cliente_api` ORDER BY nombre ASC";
         $respuesta = $this->conexion->query($sql);
         while ($objeto = $respuesta->fetch_object()) {
             array_push($arrRespuesta, $objeto);
@@ -43,7 +43,7 @@ class TokenModel {
 
    public function registrarToken($id_cliente_api, $estado) {
     // Insertamos primero con un token vacío
-    $sql = "INSERT INTO `tokens`(`id-cliente-api`, `token`, `fecha-registro`, `estado`) 
+    $sql = "INSERT INTO `tokens`(`id_cliente_api`, `token`, `fecha_registro`, `estado`) 
             VALUES (?, '', NOW(), ?)";
     $stmt = $this->conexion->prepare($sql);
     $stmt->bind_param("ii", $id_cliente_api, $estado);
@@ -52,7 +52,7 @@ class TokenModel {
         $idInsertado = $stmt->insert_id;
 
         // Generar el token personalizado
-        $random = substr(md5(uniqid()), 0, 8); // Parte aleatoria
+        $random = substr(md5(uniqid()), 0, 15); // Parte aleatoria
         $fecha  = date("Ymd");
         $tokenFinal = $random . "-" . $fecha . "-" . $idInsertado;
 
@@ -81,7 +81,7 @@ class TokenModel {
     /* === EDITAR TOKEN === */
     public function editarToken($id, $id_cliente_api, $token, $estado) {
         $sql = "UPDATE `tokens` 
-                SET `id-cliente-api` = ?, token = ?, estado = ?
+                SET `id_cliente_api` = ?, token = ?, estado = ?
                 WHERE id = ?";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("isii", $id_cliente_api, $token, $estado, $id);

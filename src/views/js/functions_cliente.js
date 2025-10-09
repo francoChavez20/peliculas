@@ -22,7 +22,7 @@ async function listar_clientes() {
                     <td>${item.apellido}</td>
                     <td>${item.telefono}</td>
                     <td>${item.correo}</td>
-                    <td>${item["fecha-registro"]}</td>
+                    <td>${item["fecha_registro"]}</td>
                     <td>${item.estado}</td>
                     <td>${item.options}</td>
                 `;

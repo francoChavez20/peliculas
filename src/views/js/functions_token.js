@@ -15,9 +15,9 @@ async function listar_tokens() {
 
                 nueva_fila.innerHTML = `
                     <th>${cont}</th>
-                    <td>${item["id-cliente-api"]}</td>
+                    <td>${item["cliente"]}</td>
                     <td>${item.token}</td>
-                    <td>${item["fecha-registro"]}</td>
+                    <td>${item["fecha_registro"]}</td>
                     <td>${item.estado}</td>
                     <td>${item.options}</td>
                 `;
@@ -89,7 +89,57 @@ async function registrar_token() {
         swal("Error", json.mensaje, "error");
     }
 }
+async function cargar_clientes(selectedId = null) {
+    try {
+        let response = await fetch(base_url + 'src/controller/cliente.php?tipo=listar');
+        let json = await response.json();
 
+        if (json.status) {
+            let select = document.querySelector('#id_cliente_api');
+            select.innerHTML = '<option value="">Seleccione cliente</option>';
+
+            json.contenido.forEach(cliente => {
+                let option = document.createElement('option');
+                option.value = cliente.id;
+                option.textContent = `${cliente.nombre} ${cliente.apellido}`;
+                if (selectedId && cliente.id == selectedId) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.log('Error al cargar clientes:', error);
+    }
+}
+
+// ===================== CARGAR CLIENTES =====================
+async function cargar_clientes(selectedId = null) {
+    try {
+        const response = await fetch(base_url + 'src/controller/cliente.php?tipo=listar');
+        const json = await response.json();
+
+        if (json.status) {
+            const select = document.querySelector('#id_cliente_api');
+            select.innerHTML = '<option value="">Seleccione cliente</option>';
+
+            json.contenido.forEach(cliente => {
+                const option = document.createElement('option');
+                option.value = cliente.id;
+                option.textContent = `${cliente.nombre} ${cliente.apellido}`;
+
+                // 👇 si coincide con el cliente del token, se marca automáticamente
+                if (selectedId && cliente.id == selectedId) {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error al cargar clientes:', error);
+    }
+}
 
 
 // ===================== EDITAR TOKEN =====================
@@ -103,19 +153,27 @@ async function editar_token(id) {
     });
 
     const json = await respuesta.json();
+    console.log(json.contenido); // 👈 para verificar datos recibidos
+
     if (json.status) {
         document.querySelector('#id_token').value = json.contenido.id;
-        document.querySelector('#id_cliente').value = json.contenido["id-cliente-api"];
         document.querySelector('#token').value = json.contenido.token;
         document.querySelector('#estado').value = json.contenido.estado;
+
+        // ✅ campo correcto confirmado
+        await cargar_clientes(json.contenido.id_cliente_api);
     }
 }
+
+
+
+
 
 
 // ===================== ACTUALIZAR TOKEN =====================
 async function actualizar_token() {
     const id = document.querySelector('#id_token').value;
-    const idCliente = document.querySelector('#id_cliente').value;
+    const idCliente = document.querySelector('#id_cliente_api').value;
     const token = document.querySelector('#token').value;
     const estado = document.querySelector('#estado').value;
 
@@ -127,7 +185,7 @@ async function actualizar_token() {
     try {
         const formData = new FormData();
         formData.append('id_token', id);
-        formData.append('id_cliente', idCliente);
+        formData.append('id_cliente_api', idCliente);
         formData.append('token', token);
         formData.append('estado', estado);
 
