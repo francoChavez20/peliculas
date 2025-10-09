@@ -146,19 +146,20 @@ if ($tipo == "eliminar") {
 
 
 
-/* === apiiiiiiiiiiiiiiiiiii === 
+/* === apiiiiiiiiiiiiiiiiiii === */
 
 if ($tipo == 'verPelicula') {
-$token = explode("-", $token);
+$token_arr = explode("-", $token);
 $id_cliente = $token_arr[2];
-$arr_clientes = $objCliente->obtenerCliente($id_cliente);
-if ($arr_clientes ->estado) {
+$arr_cliente = $objCliente->obtenerCliente($id_cliente);
+if ($arr_cliente ->estado) {
     $data = $_POST['data'];
+    $arr_peliculas = $objCliente->buscarPeliculaPorNombre($data);
+    $arr_Respuesta = array('status'=> true, 'msg'=>'' ,'contenido'=>$arr_peliculas);
     
-
 }else {
-    
-}*/
+     $arr_Respuesta = array('status'=> true, 'msg'=>'Error cliente no activo');
+}
 
-
+}
 ?>
