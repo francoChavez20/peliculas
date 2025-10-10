@@ -84,6 +84,31 @@ public function obtener_clientes() {
 }
 
 
+public function buscarPeliculaPorNombre($nombre)
+{
+    $con = $this->db->connect();
+    $arr_peliculas = [];
+
+    $sql = "SELECT id, titulo, descripcion, categoria, duracion, imagen 
+            FROM peliculas 
+            WHERE titulo LIKE ? AND estado = 1";
+
+    $stmt = $con->prepare($sql);
+    $param = "%" . $nombre . "%";
+    $stmt->bind_param('s', $param);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_object()) {
+        $arr_peliculas[] = $row;
+    }
+
+    $stmt->close();
+    $con->close();
+
+    return $arr_peliculas;
+}
 
 
 
