@@ -183,6 +183,7 @@
         <li><a class="nav-link" href="<?php echo BASE_URL;?>usuario"><i class="bi bi-card-list me-2"></i> Usuarios</a></li>
          <li><a class="nav-link" href="<?php echo BASE_URL;?>cliente"><i class="bi bi-people-fill me-2"></i>Clientes</a></li>
         <li><a class="nav-link" href="<?php echo BASE_URL;?>token"><i class="bi bi-card-list me-2"></i> token</a></li>
+        <li><a class="nav-link" href="<?php echo BASE_URL;?>api-request"><i class="bi bi-card-list me-2"></i>Api peliculas</a></li>
       </ul>
 
       <div class="section-title">Cerrar Sesión</div>

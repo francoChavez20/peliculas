@@ -10,6 +10,7 @@
                             <i class="fa fa-plus"></i> Agregar Nueva Película
                         </button>
                     </a>
+                    
                 </div>
             </div>
         </div>

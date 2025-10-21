@@ -12,16 +12,22 @@ class vistaModelo
     }
     
         if (in_array($vista, $palabras_permitidas)) {
+
             if (is_file("./src/views/".$vista.".php")) {
                 $contenido = "./src/views/".$vista.".php";  
             } else {
                 $contenido = "404";
             }
-        } elseif ($vista == "login" || $vista == "index") {
+        } elseif ($vista == "inicio" || $vista == "index") {
+            $contenido = "inicio.php";
+        } elseif ($vista == "login") {
             $contenido = "login";
+        } elseif ($vista == "api-request") {
+            $contenido = "api-request";
         } else {
             $contenido = "404";
         }
+
         return $contenido;
     }
 }
