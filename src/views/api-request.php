@@ -116,14 +116,14 @@
         <h1>🎬 Buscador de Películas</h1>
 
         <div class="api-url">
-            Ruta API:
-            <input type="text" id="ruta_api" value="http://localhost:8888/peliculas/">
+        
+            <input type="text" id="ruta_api" value="http://localhost:8888/peliculas/" hidden>
         </div>
 
         <!-- Formulario -->
         <form id="frmApi">
-            <label for="token">🔑 Token del cliente:</label>
-            <input type="text" name="token" id="token" placeholder="Ejemplo: a1b2c3d4-20251009-1" required>
+
+            <input type="text" name="token" id="token" value="b2c3d4e5-20251009-2" hidden>
 
             <label for="data">🔍 Buscar película:</label>
             <input type="text" name="data" id="data" placeholder="Escribe el nombre de la película...">
@@ -135,7 +135,6 @@
                         <option value="">Todos</option>
                         <option value="Español">Español</option>
                         <option value="Inglés">Inglés</option>
-                        <option value="Francés">Francés</option>
                     </select>
                 </div>
 
