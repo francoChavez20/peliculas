@@ -4,7 +4,7 @@ async function llamar_api() {
     let ruta_api = document.getElementById('ruta_api').value;
 
     try {
-        // Llamada a la API
+
         let respuesta = await fetch(ruta_api + '/src/controller/api-request.php?tipo=verPeliculasApiByNombre', {
             method: 'POST',
             mode: 'cors',
@@ -12,14 +12,11 @@ async function llamar_api() {
             body: datos
         });
 
-        // Convertimos la respuesta a JSON
         let json = await respuesta.json();
 
-        // Variable para generar las filas de la tabla
         let contenidoHTML = '';
         let contador = 0;
 
-        // Recorremos el arreglo de películas
         json.contenido.forEach(pelicula => {
             contador++;
             contenidoHTML += "<tr>";
@@ -34,7 +31,6 @@ async function llamar_api() {
             contenidoHTML += "</tr>";
         });
 
-        // Insertamos las filas en la tabla HTML
         document.getElementById('contenido').innerHTML = contenidoHTML;
 
     } catch (error) {
